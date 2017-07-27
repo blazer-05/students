@@ -16,7 +16,17 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from student.views import student_list, student_add, student_edit, student_delete, groups_list, groups_add, groups_edit, groups_delete
 
 urlpatterns = [
+    url(r'^$', student_list, name='home'),
+    url(r'^student/add/$', student_add, name='student_add'),
+    url(r'^student/(?P<sid>\d+)/edit/$', student_edit, name='student_edit'),
+    url(r'^student/(?P<sid>\d+)/delete/$', student_delete, name='student_delete'),
+
+    url(r'^groups/$', groups_list, name='groups'),
+    url(r'^groups/add/$', groups_add, name='groups_add'),
+    url(r'^groups/(?P<gid>\d+)/edit/$', groups_edit, name='groups_edit'),
+    url(r'^groups/(?P<gid>\d+)/delete/$', groups_delete, name='groups_delete'),
     url(r'^admin/', admin.site.urls),
 ]
