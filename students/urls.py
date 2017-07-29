@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from student.views import student_list, student_add, student_edit, student_delete, groups_list, groups_add, groups_edit, groups_delete
+
+from student.views.students import student_list, student_add, student_edit, student_delete
+from student.views.groups import groups_list, groups_add, groups_edit, groups_delete
 
 urlpatterns = [
     url(r'^$', student_list, name='home'),
