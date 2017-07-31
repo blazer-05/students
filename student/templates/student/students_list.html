@@ -38,7 +38,7 @@
                   </button>
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="{% url 'student_edit' student.id %}">Редагувати</a></li>
-                    <li><a href="/journal/{{ student.id }}">Відвідування</a></li>
+                    <li><a href="{% url 'journal' %}{{ student.id }}">Відвідування</a></li>
                     <li><a href="{% url 'student_delete' student.id %}">Видалити</a></li>
                   </ul>
                 </div>
@@ -58,7 +58,7 @@
                   </button>
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="{% url 'student_edit' student.id %}">Редагувати</a></li>
-                    <li><a href="/journal/{{ student.id }}">Відвідування</a></li>
+                    <li><a href="{% url 'journal' %}{{ student.id }}">Відвідування</a></li>
                     <li><a href="{% url 'student_delete' student.id %}">Видалити</a></li>
                   </ul>
                 </div>
@@ -78,7 +78,7 @@
                   </button>
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="{% url 'student_edit' student.id %}">Редагувати</a></li>
-                    <li><a href="/journal/{{ student.id }}">Відвідування</a></li>
+                    <li><a href="{% url 'journal' %}{{ student.id }}">Відвідування</a></li>
                     <li><a href="{% url 'student_delete' student.id %}">Видалити</a></li>
                   </ul>
                 </div>
@@ -98,7 +98,7 @@
                   </button>
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="{% url 'student_edit' student.id %}">Редагувати</a></li>
-                    <li><a href="/journal/{{ student.id }}">Відвідування</a></li>
+                    <li><a href="{% url 'journal' %}{{ student.id }}">Відвідування</a></li>
                     <li><a href="{% url 'student_delete' student.id %}">Видалити</a></li>
                   </ul>
                 </div>
@@ -118,7 +118,7 @@
                   </button>
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="{% url 'student_edit' student.id %}">Редагувати</a></li>
-                    <li><a href="/journal/{{ student.id }}">Відвідування</a></li>
+                    <li><a href="{% url 'journal' %}{{ student.id }}">Відвідування</a></li>
                     <li><a href="{% url 'student_delete' student.id %}">Видалити</a></li>
                   </ul>
                 </div>
