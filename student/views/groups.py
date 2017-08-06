@@ -1,26 +1,27 @@
 # -*- coding: UTF-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponse
+from ..models import Group
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def groups_list(request):
-    groups = (
-        {'id': 1,
-         'name': 'МтМ-1',
-         'leader': {'id': 1, 'name': 'Корост Андрей'}},
-        {'id': 2,
-         'name': 'МтМ-22',
-         'leader': {'id': 2, 'name': ' Подоба Виталий'}},
-        {'id': 3,
-         'name': 'МтМ-23',
-         'leader': {'id': 3, 'name': ' Притула Тарас'}},
-        {'id': 4,
-         'name': 'МтМ-24',
-         'leader': {'id': 4, 'name': ' Иванов Иван'}},
-        {'id': 5,
-         'name': 'МтМ-25',
-         'leader': {'id': 5, 'name': ' Петров Алексей'}},
+    groups = Group.objects.all()
+    order_by = request.GET.get('order_by', '')
+    if order_by in ('title',):
+        groups = groups.order_by(order_by)
+        if request.GET.get('reverse', '') == '1':
+            groups = groups.reverse()
 
-    )
+    paginator = Paginator(groups, 1)
+    page = request.GET.get('page')
+    try:
+        groups = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        groups = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        groups = paginator.page(paginator.num_pages)
     return render(request, 'student/group_list.html', {'groups': groups})
 
 def groups_add(request):
