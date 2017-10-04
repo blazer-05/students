@@ -7,7 +7,6 @@ class Group(models.Model):
     title = models.CharField(max_length=256, verbose_name='Имя')
     leader = models.OneToOneField('Student', blank=True, null=True, verbose_name='Староста', on_delete=models.SET_NULL)
     notes = models.TextField(blank=True, verbose_name='Заметки')
-    student_group = models.ForeignKey('Group', verbose_name='Группа', null=True, on_delete=models.PROTECT)
 
     class Meta:
         verbose_name = 'Группа'
