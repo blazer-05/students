@@ -1,7 +1,9 @@
 # -*- coding: UTF-8 -*-
 from django.shortcuts import render
-from django.http import HttpResponse
-from student.models import Student
+from django.http import HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
+
+from student.models import Student, Group
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def student_list(request):
@@ -26,7 +28,28 @@ def student_list(request):
     return render(request, 'student/students_list.html', {'students': students})
 
 def student_add(request):
-    return HttpResponse('<h1>Student Add Form</h1>')
+    if request.method == 'POST':
+        if request.POST.get('add_button') is not None:
+            errors = {}
+            if not errors:
+                student = Student(
+                    first_name=request.POST['first_name'],
+                    last_name=request.POST['last_name'],
+                    middle_name=request.POST['middle_name'],
+                    birthday=request.POST['birthday'],
+                    ticket=request.POST['ticket'],
+                    student_group=Group.objects.get(pk=request.POST['student_group']),
+                    photo=request.FILES['photo'],
+                )
+                student.save()
+                return HttpResponseRedirect(reverse('home'))
+            else:
+                return render(request, 'student/students_add.html', {'groups': Group.objects.all().order_by('title'),
+                                                                     'errors': errors})
+        elif request.POST.get('cancel_button') is not None:
+            return HttpResponseRedirect(reverse('home'))
+    else:
+        return render(request, 'student/students_add.html', {'groups': Group.objects.all().order_by('title')})
 
 def student_edit(request, sid):
     return HttpResponse('<h1>Edit Student %s</h1>' % sid)
