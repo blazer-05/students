@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -31,23 +32,62 @@ def student_add(request):
     if request.method == 'POST':
         if request.POST.get('add_button') is not None:
             errors = {}
+            data = {'middle_name': request.POST.get('middle_name'), 'notes': request.POST.get('notes')}
+
+            first_name=request.POST.get('first_name', '').strip()
+            if not first_name:
+                errors['first_name'] = 'Имя это обязательное поле'
+            else:
+                data['first_name'] = first_name
+
+            last_name=request.POST.get('last_name', '').strip()
+            if not last_name:
+                errors['last_name'] = 'Фамилия это обязательное поле'
+            else:
+                data['last_name'] = last_name
+
+            birthday=request.POST.get('birthday', '').strip()
+            if not birthday:
+                errors['birthday'] = 'Это обязательное поле к заполнению'
+            else:
+                try:
+                    datetime.strptime(birthday, '%Y-%m-%d')
+                except Exception:
+                    errors['birthday'] = 'Введите корректных формат даты'
+                else:
+                    data['birthday'] = birthday
+
+            ticket=request.POST.get('ticket', '').strip()
+            if not ticket:
+                errors['ticket'] = 'Номер билета это обязательное поле'
+            else:
+                data['ticket'] = ticket
+
+            student_group=request.POST.get('student_group', '').strip()
+            if not student_group:
+                errors['student_group'] = 'Выберите группу для студента'
+            else:
+                groups = Group.objects.filter(pk=student_group)
+                if len(groups) != 1:
+                    errors['student_group'] = 'Выберите корректную группу'
+                else:
+                    data['student_group'] = groups[0]
+
+            photo=request.FILES.get('photo')
+            if photo:
+                data['photo'] = photo
+
             if not errors:
-                student = Student(
-                    first_name=request.POST['first_name'],
-                    last_name=request.POST['last_name'],
-                    middle_name=request.POST['middle_name'],
-                    birthday=request.POST['birthday'],
-                    ticket=request.POST['ticket'],
-                    student_group=Group.objects.get(pk=request.POST['student_group']),
-                    photo=request.FILES['photo'],
-                )
+                student = Student(**data)
                 student.save()
-                return HttpResponseRedirect(reverse('home'))
+                return HttpResponseRedirect(
+                    u'%s?status_message=Студент успешно добавлен!' % reverse('home'))
             else:
                 return render(request, 'student/students_add.html', {'groups': Group.objects.all().order_by('title'),
                                                                      'errors': errors})
         elif request.POST.get('cancel_button') is not None:
-            return HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(
+                u'%s?status_message=Добавление студента отменено!' % reverse('home'))
     else:
         return render(request, 'student/students_add.html', {'groups': Group.objects.all().order_by('title')})
 
@@ -56,6 +96,7 @@ def student_edit(request, sid):
 
 def student_delete(request, sid):
     return HttpResponse('<h1>Delete Student %s</h1>' % sid)
+
 
 '''
 def student_list(request):

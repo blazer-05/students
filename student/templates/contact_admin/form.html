@@ -1,0 +1,19 @@
+{% extends 'student/base.html' %}
+
+{% load staticfiles %}
+
+{% block meta_title %}Связь с администратором{% endblock meta_title %}
+
+{% block title %}Связь с администратором{% endblock title %}
+
+{% block content %}
+
+<form action="{% url 'contact_admin' %}" method="post">
+{% csrf_token %}
+
+{{ form }}
+
+
+</form>
+
+{% endblock content %}

@@ -6,41 +6,49 @@
 
 {% block title %}Добавить студента{% endblock title %}
 
+{% block status_message %}
+  {% if errors %}
+  <div class="alert alert-warning" role="alert">
+    Пожалуйста, исправьте следующие ошибки
+  </div>
+  {% endif %}
+{% endblock status_message %}
+
 {% block content %}
 
 <form action="." method="post" enctype="multipart/form-data" role="form" class="form-horizontal">
   {% csrf_token %}
 
   <div class="form-group {% if errors.first_name %}has-error{% endif %}">
-    <label for="first_name" class="col-sm-2 control-label">Ім'я*</label>
+    <label for="first_name" class="col-sm-2 control-label">Имя*</label>
     <div class="col-sm-10">
       <input type="text" value="{{ request.POST.first_name }}"
              name="first_name" id="first_name"
-             class="form-control" />
+             class="form-control" placeholder='Ваше имя' />
       <span class="help-block">{{ errors.first_name }}</span>
     </div>
   </div>
   <div class="form-group {% if errors.last_name %}has-error{% endif %}">
-    <label for="last_name" class="col-sm-2 control-label">Прізвище*</label>
+    <label for="last_name" class="col-sm-2 control-label">Фамилия*</label>
     <div class="col-sm-10">
       <input type="text" value="{{ request.POST.first_name }}"
              name="last_name" id="last_name"
-             placeholder="Введіть ваше прізвище"
+             placeholder="Ваша фамилия"
              class="form-control" />
       <span class="help-block">{{ errors.last_name }}</span>
     </div>
   </div>
   <div class="form-group {% if errors.middle_name %}has-error{% endif %}">
-    <label for="middle_name" class="col-sm-2 control-label">По-батькові</label>
+    <label for="middle_name" class="col-sm-2 control-label">Отчество</label>
     <div class="col-sm-10">
       <input type="text" value="{{ request.POST.first_name }}"
              name="middle_name" id="middle_name"
-             class="form-control" />
+             class="form-control" placeholder='Ваше отчество' />
       <span class="help-block">{{ errors.middle_name }}</span>
     </div>
   </div>
   <div class="form-group {% if errors.birthday %}has-error{% endif %}">
-    <label for="birthday" class="col-sm-2 control-label">Дата Народження*</label>
+    <label for="birthday" class="col-sm-2 control-label">День рождения*</label>
     <div class="col-sm-10">
       <input type="text" value="{{ request.POST.birthday }}"
              name="birthday" id="birthday"
@@ -58,20 +66,20 @@
     </div>
   </div>
   <div class="form-group {% if errors.ticket %}has-error{% endif %}">
-    <label for="ticket" class="col-sm-2 control-label">Білет*</label>
+    <label for="ticket" class="col-sm-2 control-label">Билет*</label>
     <div class="col-sm-10">
       <input type="text" value="{{ request.POST.ticket }}"
              name="ticket" id="ticket"
-             class="form-control" />
+             class="form-control" placeholder='Ваш билет'/>
       <span class="help-block">{{ errors.ticket }}</span>
     </div>
   </div>
   <div class="form-group {% if errors.student_group %}has-error{% endif %}">
-    <label for="student_group" class="col-sm-2 control-label">Група*</label>
+    <label for="student_group" class="col-sm-2 control-label">Группа*</label>
     <div class="col-sm-10">
       <select name="student_group" id="student_group"
               class="form-control">
-        <option value="">Виберіть групу</option>
+        <option value="">Выберите группу</option>
         {% for group in groups %}
         <option value="{{ group.id }}" {% if group.id == request.POST.student_group|add:0 %} selected="1" {% endif %}>{{ group.title }}</option>
         {% endfor %}
@@ -80,9 +88,9 @@
     </div>
   </div>
   <div class="form-group {% if errors.notes %}has-error{% endif %}">
-    <label for="notes" class="col-sm-2 control-label">Додаткові Нотатки</label>
+    <label for="notes" class="col-sm-2 control-label">Дополнительные заметки</label>
     <div class="col-sm-10">
-      <textarea name="notes" id="notes" class="form-control">{{ request.POST.notes }}</textarea>
+      <textarea name="notes" id="notes" class="form-control" placeholder='Заметки'>{{ request.POST.notes }}</textarea>
       <span class="help-block">{{ errors.notes }}</span>
     </div>
   </div>

@@ -23,6 +23,7 @@ from django.conf import settings
 from student.views.students import student_list, student_add, student_edit, student_delete
 from student.views.groups import groups_list, groups_add, groups_edit, groups_delete
 from student.views.journal import journal_list
+from student.views.contact_admin import contact_admin
 
 urlpatterns = [
     url(r'^$', student_list, name='home'),
@@ -36,6 +37,9 @@ urlpatterns = [
     url(r'^groups/(?P<gid>\d+)/delete/$', groups_delete, name='groups_delete'),
 
     url(r'^journal/$', journal_list, name='journal'),
+
+    url(r'^contact-admin/$', contact_admin, name='contact_admin'),
+
     url(r'^admin/', admin.site.urls),
 ]
 if settings.DEBUG:
