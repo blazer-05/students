@@ -1,12 +1,10 @@
 {% extends 'student/base.html' %}
-
+{% load crispy_forms_tags %}
 {% load staticfiles %}
 
-{% load crispy_forms_tags %}
+{% block meta_title %}Редактировать студента{% endblock meta_title %}
 
-{% block meta_title %}Связь с администратором{% endblock meta_title %}
-
-{% block title %}Связь с администратором{% endblock title %}
+{% block title %}Редактировать студента{% endblock title %}
 
 {% block status_message %}
   {% if form.errors %}
@@ -14,7 +12,6 @@
     Пожалуйста, исправьте следующие ошибки
   </div>
   {% endif %}
-  {{ block.super }}
 {% endblock status_message %}
 
 {% block content %}

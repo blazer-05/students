@@ -4,9 +4,17 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
+from django.forms import ModelForm
+from django.views.generic import UpdateView, DeleteView
+
 from student.models import Student, Group
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
+from crispy_forms.bootstrap import FormActions
+
+# Вывод всего списка студентов на страницу
 def student_list(request):
     students = Student.objects.all()
     order_by = request.GET.get('order_by', '')
@@ -28,6 +36,7 @@ def student_list(request):
 
     return render(request, 'student/students_list.html', {'students': students})
 
+# Добавление студента
 def student_add(request):
     if request.method == 'POST':
         if request.POST.get('add_button') is not None:
@@ -91,14 +100,80 @@ def student_add(request):
     else:
         return render(request, 'student/students_add.html', {'groups': Group.objects.all().order_by('title')})
 
+# Определение класса для стилизации формы редактирования студента (django-crispy-forms)
+class StudentUpdateForm(ModelForm):
+    class Meta:
+        model = Student
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(StudentUpdateForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+
+        # set form tag attributes
+        try:
+            self.helper.form_action = reverse('student_edit', kwargs={'pk': kwargs['instanse'].id})
+        except:
+            self.helper.form_action = reverse('home')
+        self.helper.form_method = 'POST'
+        self.helper.form_class = 'form-horizontal'
+
+        # set form field properties
+        self.helper.help_text_inline = True
+        self.helper.html5_required = True
+        self.helper.label_class = 'col-sm-2 control-label'
+        self.helper.field_class = 'col-sm-10'
+
+        # add buttons
+        self.helper.layout[-1] = FormActions(
+            Submit('add_button', u'Сохранить', css_class='btn btn-primary'),
+            Submit('cancel_button', u'Отменить', css_class='btn btn-link'),
+        )
+
+# Редактирование студента и применения стилизации crispy-forms с помощью определенного класса StudentUpdateForm
+class StudentUpdateView(UpdateView):
+    model = Student
+    template_name = 'student/students_edit.html'
+    form_class = StudentUpdateForm
+
+    def get_success_url(self):
+        return u'%s?status_message=Студент успешно сохранен!' % reverse('home')
+
+    def post(self, request, *args, **kwargs):
+        if request.POST.get('cancel_button'):
+            return HttpResponseRedirect(u'%s?status_message=Редактирование студента отменено!' % reverse('home'))
+        else:
+            return super(StudentUpdateView, self).post(request, *args, **kwargs)
+
+# Удаление студента
+class StudentDeleteView(DeleteView):
+    model = Student
+    template_name = 'student/students_confirm_delete.html'
+
+    def get_success_url(self):
+        return u'%s?status_message=Студента успішно видалено!' % reverse('home')
+
+'''
+
+class StudentUpdateView(UpdateView):
+    model = Student
+    template_name = 'student/students_edit.html'
+
+    def get_success_url(self):
+        return u'%s?status_message=Студент успешно сохранен!' % reverse('home')
+
+    def post(self, request, *args, **kwargs):
+        if request.POST.get('cancel_button'):
+            return HttpResponseRedirect(u'%s?status_message=Редактирование студента отменено!' % reverse('home'))
+        else:
+            return super(StudentUpdateView, self).post(request, *args, **kwargs)
+
 def student_edit(request, sid):
     return HttpResponse('<h1>Edit Student %s</h1>' % sid)
 
 def student_delete(request, sid):
     return HttpResponse('<h1>Delete Student %s</h1>' % sid)
 
-
-'''
 def student_list(request):
     students = (
         {'id': 1,

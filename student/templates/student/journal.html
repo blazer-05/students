@@ -2,63 +2,94 @@
 
 {% load staticfiles %}
 
-{% block meta_title %}Журнал{% endblock meta_title %}
+{% block meta_title %}Учет посещения{% endblock meta_title %}
 
-{% block title %}Облік Відвідування{% endblock title %}
+{% block title %}Учет посещения{% endblock title %}
 
 {% block content %}
 
-<!-- Start Students Listing -->
-<p align="center"><a href="#">&larr;</a>Листопад 2016<a href="#">&rarr;</a></p>
+    {% if not students %}
 
-<table class="table table-hover table-striped">
-	<thead>
-		<tr>
-			<th>#</th>
-			<th>Студент</th>
-			<th>Вт<br>1</th>
-			<th>Ср<br>2</th>
-			<th>Чт<br>3</th>
-			<th>Пт<br>4</th>
-			<th>Сб<br>5</th>
-			<th>Нд<br>6</th>
-			<th>Пн<br>7</th>
-			<th>Вт<br>8</th>
-			<th>Ср<br>9</th>
-			<th>Чт<br>10</th>
-			<th>Пт<br>11</th>
-			<th>Сб<br>12</th>
-			<th>Нд<br>13</th>
-			<th>Пн<br>14</th>
-			<th>Вт<br>15</th>
-			<th>Ср<br>16</th>
-			<th>Чт<br>17</th>
-			<th>Пт<br>18</th>
-			<th>Сб<br>19</th>
-			<th>Нд<br>20</th>
-			<th>Пн<br>21</th>
-			<th>Вт<br>22</th>
-			<th>Ср<br>23</th>
-			<th>Чт<br>24</th>
-			<th>Пт<br>25</th>
-			<th>Сб<br>26</th>
-			<th>Нд<br>27</th>
-			<th>Пн<br>28</th>
-			<th>Вт<br>29</th>
-			<th>Ср<br>30</th>
-		</tr>
-	</thead>
-	<tbody>
-	{% for student in students %}
-		<tr>
-			<td>{{ forloop.counter }}</td>
-			<td><a href="{% url "students_edit" student.id %}">{{ student.last_name }}<br>{{ student.first_name }}</a></td>
-			{% for i in 30 %}
-				<td><input type="checkbox"></td>
-			{% endfor %}
-		</tr>
-	{% endfor %}
-	</tbody>
+<div class="alert alert-warning">
+    Поки немає жодного студента в базі. Будь-ласка,
+    <a href="{% url "student_add" %}">додайте</a> першого.
+</div>
+
+{% else %}
+
+<div class="alert alert-warning">
+    Зміни в журнал зберігаються автоматично при кожному кліку в клітинці
+    таблиці.
+    <span id="ajax-progress-indicator">Йде збереження...</span>
+</div>
+
+<p id="journal-nav" class="text-center">
+  <a href="?month={{ prev_month }}"
+     title="Попередній Місяць">&larr;</a>
+  <!-- TODO: translate month name -->
+  <strong>{{ month_verbose }} {{ year }}</strong>
+  <a href="?month={{ next_month }}"
+     title="Наступний Місяць">&rarr;</a>
+</p>
+
+<table class="table table-hover table-striped table-bordered"
+       id="students-journal">
+
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Студент</th>
+      {% for day in month_header %}
+      <th class="day-header">
+        <!-- TODO: translate day name -->
+        {{ day.verbose }}
+        <br />
+        {{ day.day }}
+      </th>
+      {% endfor %}
+    </tr>
+  </thead>
+
+  <tbody>
+
+    {% csrf_token %}
+
+    {% for student in students %}
+    <tr>
+
+      <td>
+        {% if is_paginated %}
+          {{ page_obj.start_index|add:forloop.counter0 }}
+        {% else %}
+          {{ forloop.counter }}
+        {% endif %}
+      </td>
+
+      <td>
+        <a title="Редагувати" target="_blank"
+           href="{% url "student_edit" student.id %}">
+          {{ student.fullname }}
+        </a>
+      </td>
+
+      {% for day in student.days %}
+      <td class="day-box">
+        <input type="checkbox" data-student-id="{{ student.id }}"
+               data-date="{{ day.date }}" data-url="{{ student.update_url }}"
+               value="1"{% if day.present %} checked="checked" {% endif %} />
+      </td>
+      {% endfor %}
+
+    </tr>
+    {% endfor %}
+
+  </tbody>
 </table>
+
+{% endif %}
+
+{% with object_list=students %}
+  {% include "student/pagination.html" %}
+{% endwith %}
 
 {% endblock content %}
