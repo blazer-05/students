@@ -30,4 +30,3 @@ class StudentAdmin(admin.ModelAdmin):
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Group)
 admin.site.register(MonthJournal)
-
