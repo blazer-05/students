@@ -33,6 +33,7 @@ class ContactForm(forms.Form):
     from_email = forms.EmailField(label='Ваш e-mail')
     subject = forms.CharField(label='Заголовок письма', max_length=128)
     message = forms.CharField(label='Текст сообщения', max_length=2560, widget=forms.Textarea)
+    copy = forms.BooleanField(required=False, label='Отправить копию себе')
 
 def contact_admin(request):
     if request.method == 'POST':
@@ -41,9 +42,13 @@ def contact_admin(request):
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
             from_email = form.cleaned_data['from_email']
+            copy = form.cleaned_data['copy']
+            recepients = ['blazer-05@mail.ru']
 
+            if copy:
+                recepients.append(from_email)
             try:
-                send_mail(subject, message, from_email, ['blazer-05@mail.ru'])
+                send_mail(subject, message, 'blazer-05@mail.ru', recepients)
             except Exception:
                 message = u'При отправке сообщения возникла непредвиденная ошибка. Попробуйте отправить еще раз.'
             else:
