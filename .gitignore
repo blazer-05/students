@@ -95,6 +95,3 @@ ENV/
 .idea/
 Apache-2.4_vhost.conf
 students/settings.py
-
-
-
