@@ -52,7 +52,7 @@ coverage.xml
 *.pot
 
 # Django stuff:
-*.log
+
 local_settings.py
 
 # Flask stuff:
@@ -95,5 +95,6 @@ ENV/
 .idea/
 Apache-2.4_vhost.conf
 students/settings.py
+
 
 
