@@ -95,3 +95,4 @@ ENV/
 Apache-2.4_vhost.conf
 students/settings.py
 student.log
+mod.wsgi
