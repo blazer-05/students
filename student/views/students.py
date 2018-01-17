@@ -154,6 +154,12 @@ class StudentDeleteView(DeleteView):
     def get_success_url(self):
         return u'%s?status_message=Студента успішно видалено!' % reverse('home')
 
+
+from django.utils.translation import ugettext as _
+def test(request):
+    return render(request, 'student/test.html', {'message': _("It's a good weather today!") })
+
+
 '''
 
 class StudentUpdateView(UpdateView):

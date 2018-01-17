@@ -1,0 +1,10 @@
+{% extends 'student/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block content %}
+
+    <h1>{% trans 'Hello World!' %}</h1>
+    <p>{{ message }}</p>
+
+{% endblock %}

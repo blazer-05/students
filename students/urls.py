@@ -24,7 +24,7 @@ from student.views.contact_admin import contact_admin
 from student.views.students import student_list, student_add
 from student.views.groups import groups_list, groups_add, groups_edit, groups_delete
 
-from student.views.students import StudentUpdateView, StudentDeleteView
+from student.views.students import StudentUpdateView, StudentDeleteView, test
 from student.views.journal import JournalView
 
 urlpatterns = [
@@ -43,6 +43,7 @@ urlpatterns = [
 
     url(r'^contact-admin/$', contact_admin, name='contact_admin'),
     url(r'^admin/', admin.site.urls),
+    url(r'^test/', test, name='test'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
