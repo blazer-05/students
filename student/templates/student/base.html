@@ -1,10 +1,11 @@
+{% load i18n %}
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang=”ru”>
 <head>
   <meta charset="UTF-8"/>
-  <title> Сервис учета студентов - {% block meta_title %}{% endblock meta_title %} </title>
-  <meta name="description" value="Система учета студентов начального заведения" />
+  <title> {% trans 'Students Accounting Service' %} - {% block meta_title %}{% endblock meta_title %} </title>
+  <meta name="description" value="{% trans 'App to manage students d8 atabase' %}"/>
   <meta name="iewport" content="width=device-width, initial-scale=1\ ">
   <!-- Include Styles -->
   <link rel="stylesheet"
@@ -22,12 +23,33 @@
     <!-- Start Header -->
     <div class="row" id="header">
       <div class="col-xs-8">
-        <h1><a href="/">Сервіс Обліку Студентів</a></h1>
+        <h1></h1>
       </div>
       <div class="col-xs-4" id="group-selector">
-        <strong>Група:</strong>
+        <strong>Выбор языка:</strong>
+            <form action="/i18n/setlang/" method="POST">
+              {% csrf_token %}
+              <input name="next" type="hidden" value="/accounts/profile/" /><br/>
+              <select name="language">
+                {% for lang in LANGUAGES %}
+                  <option value="{{ lang.0 }}">{{ lang.1 }}</option>
+                {% endfor %}
+              </select><br/>
+              <input type="submit" value="{% trans 'change' %}" />
+            </form>
+      </div>
+    </div>
+    <!-- End Header -->
+
+      <!-- Start Header -->
+    <div class="row" id="header">
+      <div class="col-xs-8">
+        <h1><a href="/">{% trans 'Students Accounting Service' %}</a></h1>
+      </div>
+      <div class="col-xs-4" id="group-selector">
+        <strong>{% trans 'Group:' %}</strong>
         <select>
-          <option value="">Усі Студенти</option>
+          <option value="">{% trans 'All Students' %}</option>
           {% for group in GROUPS %}
           <option value="{{ group.id }}"{% if group.selected %}selected="1"{% endif %}>{{ group.title }}{% if group.leader %}, {{ group.leader }}{% endif %}</option>
           {% endfor %}
@@ -41,13 +63,13 @@
       <div class="col-xs-12">
         <ul class="nav nav-tabs" role="tablist">
             {% url 'home' as url_home %}
-          <li role="presentation" {% if request.path == url_home %} class="active" {% endif %}><a href="{% url 'home' %}">Студенти</a></li>
+          <li role="presentation" {% if request.path == url_home %} class="active" {% endif %}><a href="{% url 'home' %}">{% trans 'Students' %}</a></li>
             {% url 'journal' as url_journal %}
-          <li role="presentation" {% if request.path == url_journal %} class="active" {% endif %}><a href="{% url 'journal' %}">Відвідування</a></li>
+          <li role="presentation" {% if request.path == url_journal %} class="active" {% endif %}><a href="{% url 'journal' %}">{% trans 'Journal' %}</a></li>
             {% url 'groups' as url_groups %}
-          <li role="presentation" {% if request.path == url_groups %} class="active" {% endif %}><a href="{% url 'groups' %}">Групи</a></li>
+          <li role="presentation" {% if request.path == url_groups %} class="active" {% endif %}><a href="{% url 'groups' %}">{% trans 'Groups' %}</a></li>
             {% url 'contact_admin' as url_contact_admin %}
-          <li role="presentation" {% if request.path == url_contact_admin %} class="active" {% endif %}><a href="{% url 'contact_admin' %}">Контакт</a></li>
+          <li role="presentation" {% if request.path == url_contact_admin %} class="active" {% endif %}><a href="{% url 'contact_admin' %}">{% trans 'Contact' %}</a></li>
         </ul>
       </div>
     </div>
@@ -73,7 +95,7 @@
     <!-- Start Footer -->
     <div class="row" id="footer">
       <div class="col-xs-12">
-        &copy; 2014 Сервіс Обліку Студентів
+        &copy; 2014 {% trans 'Students Accounting Service' %}
       </div>
     </div>
     <!-- End Footer -->
@@ -104,6 +126,7 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
   <script src="https://cdn.jsdelivr.net/bootstrap/3.3.0/js/bootstrap.min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.0.0/js/bootstrap-datetimepicker.min.js"></script>
+  <script src="{% url 'js_translite' %}"></script>
   <script src="{% static 'js/main.js' %}"></script>
   <script src="{% static 'js/jquery.cookie.js' %}"></script>
     {% block extra_js %}{% endblock extra_js %}

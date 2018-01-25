@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 
 from django.forms import ModelForm
 from django.views.generic import UpdateView, DeleteView
+from django.utils.translation import ugettext as _
 
 from student.models import Student, Group
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -46,40 +47,40 @@ def student_add(request):
 
             first_name=request.POST.get('first_name', '').strip()
             if not first_name:
-                errors['first_name'] = 'Имя это обязательное поле'
+                errors['first_name'] = _('First Name field is required')
             else:
                 data['first_name'] = first_name
 
             last_name=request.POST.get('last_name', '').strip()
             if not last_name:
-                errors['last_name'] = 'Фамилия это обязательное поле'
+                errors['last_name'] = _('Last Name field is required')
             else:
                 data['last_name'] = last_name
 
             birthday=request.POST.get('birthday', '').strip()
             if not birthday:
-                errors['birthday'] = 'Это обязательное поле к заполнению'
+                errors['birthday'] = _('This field is required.')
             else:
                 try:
                     datetime.strptime(birthday, '%Y-%m-%d')
                 except Exception:
-                    errors['birthday'] = 'Введите корректных формат даты'
+                    errors['birthday'] = _('Enter the correct date format')
                 else:
                     data['birthday'] = birthday
 
             ticket=request.POST.get('ticket', '').strip()
             if not ticket:
-                errors['ticket'] = 'Номер билета это обязательное поле'
+                errors['ticket'] = _('Ticket number is a required field')
             else:
                 data['ticket'] = ticket
 
             student_group=request.POST.get('student_group', '').strip()
             if not student_group:
-                errors['student_group'] = 'Выберите группу для студента'
+                errors['student_group'] = _('Select a group for the student')
             else:
                 groups = Group.objects.filter(pk=student_group)
                 if len(groups) != 1:
-                    errors['student_group'] = 'Выберите корректную группу'
+                    errors['student_group'] = _('Select the correct group')
                 else:
                     data['student_group'] = groups[0]
 
@@ -91,13 +92,13 @@ def student_add(request):
                 student = Student(**data)
                 student.save()
                 return HttpResponseRedirect(
-                    u'%s?status_message=Студент успешно добавлен!' % reverse('home'))
+                    u'%s?status_message=%s' % (reverse('home')), _('The student was successfully added!'))
             else:
                 return render(request, 'student/students_add.html', {'groups': Group.objects.all().order_by('title'),
                                                                      'errors': errors})
         elif request.POST.get('cancel_button') is not None:
             return HttpResponseRedirect(
-                u'%s?status_message=Добавление студента отменено!' % reverse('home'))
+                u'%s?status_message=%s' % (reverse('home'), _('Student additions canceled!')))
     else:
         return render(request, 'student/students_add.html', {'groups': Group.objects.all().order_by('title')})
 
@@ -127,8 +128,8 @@ class StudentUpdateForm(ModelForm):
 
         # add buttons
         self.helper.layout[-1] = FormActions(
-            Submit('add_button', u'Сохранить', css_class='btn btn-primary'),
-            Submit('cancel_button', u'Отменить', css_class='btn btn-link'),
+            Submit('add_button', _(u'Save'), css_class='btn btn-primary'),
+            Submit('cancel_button', _(u'Cancel'), css_class='btn btn-link'),
         )
 
 # Редактирование студента и применения стилизации crispy-forms с помощью определенного класса StudentUpdateForm
@@ -138,11 +139,11 @@ class StudentUpdateView(UpdateView):
     form_class = StudentUpdateForm
 
     def get_success_url(self):
-        return u'%s?status_message=Студент успешно сохранен!' % reverse('home')
+        return u'%s?status_message=%s' % (reverse('home')), _('The student was successfully saved!')
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(u'%s?status_message=Редактирование студента отменено!' % reverse('home'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home')), _('Editing of the student is canceled!'))
         else:
             return super(StudentUpdateView, self).post(request, *args, **kwargs)
 
@@ -152,7 +153,7 @@ class StudentDeleteView(DeleteView):
     template_name = 'student/students_confirm_delete.html'
 
     def get_success_url(self):
-        return u'%s?status_message=Студента успішно видалено!' % reverse('home')
+        return u'%s?status_message=%s' % (reverse('home')), _('Student successfully deleted!')
 
 
 from django.utils.translation import ugettext as _

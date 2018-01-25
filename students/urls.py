@@ -14,7 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 
 from django.conf.urls.static import static
@@ -22,10 +22,16 @@ from django.conf import settings
 
 from student.views.contact_admin import contact_admin
 from student.views.students import student_list, student_add
-from student.views.groups import groups_list, groups_add, groups_edit, groups_delete
+from student.views.groups import GroupAddView, GroupUpdateView, GroupDeleteView, groups_list
 
 from student.views.students import StudentUpdateView, StudentDeleteView, test
 from student.views.journal import JournalView
+
+from django.views.i18n import javascript_catalog
+
+js_info_dict = {
+    'packages': ('student', ),
+}
 
 urlpatterns = [
     url(r'^$', student_list, name='home'),
@@ -33,10 +39,13 @@ urlpatterns = [
     url(r'^student/(?P<pk>\d+)/edit/$', StudentUpdateView.as_view(), name='student_edit'),
     url(r'^student/(?P<pk>\d+)/delete/$', StudentDeleteView.as_view(), name='student_delete'),
 
+    # Groups urls
     url(r'^groups/$', groups_list, name='groups'),
-    url(r'^groups/add/$', groups_add, name='groups_add'),
-    url(r'^groups/(?P<gid>\d+)/edit/$', groups_edit, name='groups_edit'),
-    url(r'^groups/(?P<gid>\d+)/delete/$', groups_delete, name='groups_delete'),
+    url(r'^groups/add/$', GroupAddView.as_view(), name='groups_add'),
+    url(r'^groups/(?P<pk>\d+)/edit/$', GroupUpdateView.as_view(),
+        name='groups_edit'),
+    url(r'^groups/(?P<pk>\d+)/delete/$', GroupDeleteView.as_view(),
+        name='groups_delete'),
 
     # Journal urls
     url(r'^journal/(?P<pk>\d+)?/?$', JournalView.as_view(), name='journal'),
@@ -44,7 +53,12 @@ urlpatterns = [
     url(r'^contact-admin/$', contact_admin, name='contact_admin'),
     url(r'^admin/', admin.site.urls),
     url(r'^test/', test, name='test'),
+
+    url(r'^i18n/', include('django.conf.urls.i18n')),
+    url(r'^jsi18\.js$', javascript_catalog, js_info_dict, name='js_translite'),
+
 ]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
