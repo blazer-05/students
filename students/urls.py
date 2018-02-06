@@ -26,8 +26,10 @@ from student.views.groups import GroupAddView, GroupUpdateView, GroupDeleteView,
 
 from student.views.students import StudentUpdateView, StudentDeleteView, test
 from student.views.journal import JournalView
+from students.languages import lang
 
 from django.views.i18n import javascript_catalog
+#from django.conf.urls.i18n import i18n_patterns
 
 js_info_dict = {
     'packages': ('student', ),
@@ -56,6 +58,7 @@ urlpatterns = [
 
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^jsi18\.js$', javascript_catalog, js_info_dict, name='js_translite'),
+    url(r'^lang/(?P<lang_code>[a-z]{2})/$', lang, name='lang'),
 
 ]
 

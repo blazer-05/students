@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-24 13:06+0300\n"
+"POT-Creation-Date: 2018-01-26 08:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,7 +35,7 @@ msgstr "Заметки"
 msgid "Group"
 msgstr "Группа"
 
-#: .\models\groups.py:15 .\templates\student\base.html:49
+#: .\models\groups.py:15 .\templates\student\base.html:96
 msgid "Groups"
 msgstr "Группы"
 
@@ -85,7 +85,7 @@ msgstr "№ Билета"
 msgid "Extra Notes"
 msgstr "Дополнительные заметки"
 
-#: .\models\students.py:18 .\templates\student\base.html:45
+#: .\models\students.py:18 .\templates\student\base.html:92
 #: .\templates\student\students_list.html:5
 msgid "Students"
 msgstr "Студенты"
@@ -100,8 +100,8 @@ msgstr "Связь с администратором"
 msgid "Please correct the following errors"
 msgstr "Пожалуйста исправьте следующие ошибки"
 
-#: .\templates\student\base.html:7 .\templates\student\base.html:26
-#: .\templates\student\base.html:77
+#: .\templates\student\base.html:7 .\templates\student\base.html:73
+#: .\templates\student\base.html:124
 msgid "Students Accounting Service"
 msgstr "Сервис учета студентов"
 
@@ -110,18 +110,23 @@ msgid "App to manage students d8 atabase"
 msgstr "Приложение для уравления базой данных студентов Д8"
 
 #: .\templates\student\base.html:29
+
+msgid "Select Language:"
+msgstr "Выберите язык"
+
+#: .\templates\student\base.html:76
 msgid "Group:"
 msgstr "Группа"
 
-#: .\templates\student\base.html:31
+#: .\templates\student\base.html:78
 msgid "All Students"
 msgstr "Все студенты"
 
-#: .\templates\student\base.html:47 .\templates\student\students_list.html:71
+#: .\templates\student\base.html:94 .\templates\student\students_list.html:71
 msgid "Journal"
 msgstr "Журнал"
 
-#: .\templates\student\base.html:51
+#: .\templates\student\base.html:98
 msgid "Contact"
 msgstr "Контакт"
 

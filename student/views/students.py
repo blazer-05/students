@@ -16,6 +16,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms.bootstrap import FormActions
 
+
 # Вывод всего списка студентов на страницу
 def student_list(request):
     # check if we need to show only one group of students

@@ -45,3 +45,38 @@ th.day-header {
 #ajax-progress-indicator {
 	display: none;
 }
+
+.flag-icon-ru {
+    background-image: url(../img/flags/ru.svg);
+}
+
+.flag-icon-en {
+    background-image: url(../img/flags/gb.svg);
+}
+
+.flag-icon::before {
+    content: "\00a0";
+}
+
+.flag-icon {
+	background-size: contain;
+	background-position: 50%;
+	background-repeat: no-repeat;
+	position: relative;
+	display: inline-block;
+	width: 1.33333333em;
+	line-height: 1em;
+}
+
+.dropdown-menu > li > a {
+    font-size: 12px;
+}
+.dropdown-menu > li > a {
+	display: block;
+	padding: 3px 20px;
+	clear: both;
+	font-weight: normal;
+	line-height: 1.42857143;
+	color: #404244;
+	white-space: nowrap;
+}
