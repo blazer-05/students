@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django.core.mail import send_mail
@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django import forms
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.decorators import permission_required
 
 class ContactForm(forms.Form):
 
@@ -36,6 +37,8 @@ class ContactForm(forms.Form):
     message = forms.CharField(label=_(u'Text message'), max_length=2560, widget=forms.Textarea)
     copy = forms.BooleanField(required=False, label=_(u'Send a copy to myself'))
 
+#@permission_required('auth.add_user') #этот декоратор получает аргументом название разрешение для защиты auth.add_user.
+                                      #в админке в пользователях нужно дать права зарегистрированому пользователю auth|пользователь|Can add user .Тогда этот пользователь сможет использовать форму обратной связи.
 def contact_admin(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)

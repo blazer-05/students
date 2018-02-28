@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-26 08:55+0300\n"
+"POT-Creation-Date: 2018-02-11 14:34+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,10 +32,11 @@ msgid "Notes"
 msgstr "Заметки"
 
 #: .\models\groups.py:14 .\models\students.py:14
+#: .\templates\student\base.html:138
 msgid "Group"
 msgstr "Группа"
 
-#: .\models\groups.py:15 .\templates\student\base.html:96
+#: .\models\groups.py:15 .\templates\student\base.html:174
 msgid "Groups"
 msgstr "Группы"
 
@@ -58,11 +59,11 @@ msgstr "Месячные Журналы"
 
 #: .\models\students.py:7
 msgid "First Name"
-msgstr "Фамилия"
+msgstr "Имя"
 
 #: .\models\students.py:8
 msgid "Last Name"
-msgstr "Имя"
+msgstr "Фамилия"
 
 #: .\models\students.py:9
 msgid "Middle Name"
@@ -85,7 +86,7 @@ msgstr "№ Билета"
 msgid "Extra Notes"
 msgstr "Дополнительные заметки"
 
-#: .\models\students.py:18 .\templates\student\base.html:92
+#: .\models\students.py:18 .\templates\student\base.html:170
 #: .\templates\student\students_list.html:5
 msgid "Students"
 msgstr "Студенты"
@@ -100,33 +101,65 @@ msgstr "Связь с администратором"
 msgid "Please correct the following errors"
 msgstr "Пожалуйста исправьте следующие ошибки"
 
-#: .\templates\student\base.html:7 .\templates\student\base.html:73
-#: .\templates\student\base.html:124
+#: .\templates\student\base.html:9 .\templates\student\base.html:132
+#: .\templates\student\base.html:202
 msgid "Students Accounting Service"
 msgstr "Сервис учета студентов"
 
-#: .\templates\student\base.html:8
+#: .\templates\student\base.html:10
 msgid "App to manage students d8 atabase"
 msgstr "Приложение для уравления базой данных студентов Д8"
 
-#: .\templates\student\base.html:29
-
+#: .\templates\student\base.html:51
 msgid "Select Language:"
 msgstr "Выберите язык"
 
-#: .\templates\student\base.html:76
-msgid "Group:"
-msgstr "Группа"
+#: .\templates\student\base.html:54
+msgid "English"
+msgstr "Английский"
 
-#: .\templates\student\base.html:78
+#: .\templates\student\base.html:55
+msgid "Russian"
+msgstr "Русский"
+
+#: .\templates\student\base.html:60 .\templates\student\base.html:69
+#: .\templates\student\base.html:156
+msgid "Login"
+msgstr "Войти"
+
+#: .\templates\student\base.html:63
+msgid "Login Name"
+msgstr "Логин"
+
+#: .\templates\student\base.html:64
+msgid "Password"
+msgstr "Пароль"
+
+#: .\templates\student\base.html:65 .\templates\student\base.html:157
+msgid "Sign Up"
+msgstr "Регистрация"
+
+#: .\templates\student\base.html:66
+msgid "Forgot your password?"
+msgstr "Забыли свой пароль?"
+
+#: .\templates\student\base.html:67
+msgid "Activate Account"
+msgstr "Активация аккаунта"
+
+#: .\templates\student\base.html:140
 msgid "All Students"
 msgstr "Все студенты"
 
-#: .\templates\student\base.html:94 .\templates\student\students_list.html:71
+#: .\templates\student\base.html:149
+msgid "Logout"
+msgstr "Выйти"
+
+#: .\templates\student\base.html:172 .\templates\student\students_list.html:71
 msgid "Journal"
 msgstr "Журнал"
 
-#: .\templates\student\base.html:98
+#: .\templates\student\base.html:176
 msgid "Contact"
 msgstr "Контакт"
 
@@ -212,7 +245,7 @@ msgstr "В базе пока нет студентов. Пожалуйста"
 #: .\templates\student\journal.html:15
 #: .\templates\student\students_add.html:100 .\views\groups.py:67
 msgid "Add"
-msgstr " Добавить"
+msgstr "Добавить"
 
 #: .\templates\student\journal.html:15
 msgid "The first one"
@@ -242,17 +275,21 @@ msgstr "Добавить студента"
 
 #: .\templates\student\students_add.html:23
 msgid "First name*"
-msgstr "Фамилия*"
+msgstr "Имя*"
 
 #: .\templates\student\students_add.html:27
-#: .\templates\student\students_add.html:36
 #: .\templates\student\students_list.html:34
 msgid "First name"
-msgstr "Фамилия"
+msgstr "Имя"
 
 #: .\templates\student\students_add.html:32
 msgid "Last name*"
-msgstr "Имя*"
+msgstr "Фамилия*"
+
+#: .\templates\student\students_add.html:36
+#: .\templates\student\students_list.html:27
+msgid "Last name"
+msgstr "Фамилия"
 
 #: .\templates\student\students_add.html:42
 #: .\templates\student\students_add.html:46
@@ -262,6 +299,10 @@ msgstr "Отчество"
 #: .\templates\student\students_add.html:51
 msgid "Birthday*"
 msgstr "День рождения"
+
+#: .\templates\student\students_add.html:55
+msgid "eg"
+msgstr "Например"
 
 #: .\templates\student\students_add.html:69
 msgid "ticket*"
@@ -285,7 +326,7 @@ msgid "Additional notes"
 msgstr "Дополнительные заметки"
 
 #: .\templates\student\students_add.html:103 .\views\groups.py:74
-#: .\views\students.py:132
+#: .\views\students.py:133
 msgid "Cancel"
 msgstr "Отменить"
 
@@ -310,10 +351,6 @@ msgstr "Студенты"
 #: .\templates\student\students_list.html:11
 msgid "Add Student"
 msgstr "Добавить студента"
-
-#: .\templates\student\students_list.html:27
-msgid "Last name"
-msgstr "Имя"
 
 #: .\templates\student\students_list.html:40
 msgid "Ticket #"
@@ -355,7 +392,7 @@ msgstr ""
 msgid "Your message was successfully sent!"
 msgstr "Ваше сообщение успешно отправлено"
 
-#: .\views\groups.py:70 .\views\students.py:131
+#: .\views\groups.py:70 .\views\students.py:132
 msgid "Save"
 msgstr "Сохранено"
 
@@ -367,54 +404,57 @@ msgstr "Изменения успешно сохранены"
 msgid "Changes canceled."
 msgstr "Изменения отменены"
 
-#: .\views\students.py:50
+#: .\views\students.py:51
 msgid "First Name field is required"
 msgstr "Поле «Имя» обязательно."
 
-#: .\views\students.py:56
+#: .\views\students.py:57
 msgid "Last Name field is required"
 msgstr "Поле «Фамилия» обязательно."
 
-#: .\views\students.py:62
+#: .\views\students.py:63
 msgid "This field is required."
 msgstr "Это поле обязательно к заполнению"
 
-#: .\views\students.py:67
+#: .\views\students.py:68
 msgid "Enter the correct date format"
 msgstr "Введите правильный формат даты"
 
-#: .\views\students.py:73
+#: .\views\students.py:74
 msgid "Ticket number is a required field"
 msgstr "Номер билета - обязательное поле"
 
-#: .\views\students.py:79
+#: .\views\students.py:80
 msgid "Select a group for the student"
 msgstr "Выберите группу для студента"
 
-#: .\views\students.py:83
+#: .\views\students.py:84
 msgid "Select the correct group"
 msgstr "Выберите группу"
 
-#: .\views\students.py:95
+#: .\views\students.py:96
 msgid "The student was successfully added!"
-msgstr "Изменения успешно сохранены"
+msgstr "Студент успешно добавлен!"
 
-#: .\views\students.py:101
+#: .\views\students.py:102
 msgid "Student additions canceled!"
 msgstr "Отмена добавления студента"
 
-#: .\views\students.py:142
+#: .\views\students.py:143
 msgid "The student was successfully saved!"
-msgstr "Изменения успешно сохранены"
+msgstr "Студент успешно сохранен!"
 
-#: .\views\students.py:146
+#: .\views\students.py:147
 msgid "Editing of the student is canceled!"
 msgstr "Редактирование студента отменено!"
 
-#: .\views\students.py:156
+#: .\views\students.py:157
 msgid "Student successfully deleted!"
 msgstr "Студент успешно удален!"
 
-#: .\views\students.py:161
+#: .\views\students.py:162
 msgid "It's a good weather today!"
 msgstr "Сегодня отличная погода!"
+
+#~ msgid "Group:"
+#~ msgstr "Группа"

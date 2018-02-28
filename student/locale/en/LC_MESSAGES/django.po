@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-26 08:55+0300\n"
+"POT-Creation-Date: 2018-02-11 14:34+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,10 +29,11 @@ msgid "Notes"
 msgstr ""
 
 #: .\models\groups.py:14 .\models\students.py:14
+#: .\templates\student\base.html:138
 msgid "Group"
 msgstr ""
 
-#: .\models\groups.py:15 .\templates\student\base.html:96
+#: .\models\groups.py:15 .\templates\student\base.html:174
 msgid "Groups"
 msgstr ""
 
@@ -82,7 +83,7 @@ msgstr ""
 msgid "Extra Notes"
 msgstr ""
 
-#: .\models\students.py:18 .\templates\student\base.html:92
+#: .\models\students.py:18 .\templates\student\base.html:170
 #: .\templates\student\students_list.html:5
 msgid "Students"
 msgstr ""
@@ -97,32 +98,65 @@ msgstr ""
 msgid "Please correct the following errors"
 msgstr ""
 
-#: .\templates\student\base.html:7 .\templates\student\base.html:73
-#: .\templates\student\base.html:124
+#: .\templates\student\base.html:9 .\templates\student\base.html:132
+#: .\templates\student\base.html:202
 msgid "Students Accounting Service"
 msgstr ""
 
-#: .\templates\student\base.html:8
+#: .\templates\student\base.html:10
 msgid "App to manage students d8 atabase"
 msgstr ""
 
-#: .\templates\student\base.html:29
+#: .\templates\student\base.html:51
 msgid "Select Language:"
 msgstr ""
 
-#: .\templates\student\base.html:76
-msgid "Group:"
+#: .\templates\student\base.html:54
+msgid "English"
 msgstr ""
 
-#: .\templates\student\base.html:78
+#: .\templates\student\base.html:55
+msgid "Russian"
+msgstr ""
+
+#: .\templates\student\base.html:60 .\templates\student\base.html:69
+#: .\templates\student\base.html:156
+msgid "Login"
+msgstr ""
+
+#: .\templates\student\base.html:63
+msgid "Login Name"
+msgstr ""
+
+#: .\templates\student\base.html:64
+msgid "Password"
+msgstr ""
+
+#: .\templates\student\base.html:65 .\templates\student\base.html:157
+msgid "Sign Up"
+msgstr ""
+
+#: .\templates\student\base.html:66
+msgid "Forgot your password?"
+msgstr ""
+
+#: .\templates\student\base.html:67
+msgid "Activate Account"
+msgstr ""
+
+#: .\templates\student\base.html:140
 msgid "All Students"
 msgstr ""
 
-#: .\templates\student\base.html:94 .\templates\student\students_list.html:71
+#: .\templates\student\base.html:149
+msgid "Logout"
+msgstr ""
+
+#: .\templates\student\base.html:172 .\templates\student\students_list.html:71
 msgid "Journal"
 msgstr ""
 
-#: .\templates\student\base.html:98
+#: .\templates\student\base.html:176
 msgid "Contact"
 msgstr ""
 
@@ -241,13 +275,17 @@ msgid "First name*"
 msgstr ""
 
 #: .\templates\student\students_add.html:27
-#: .\templates\student\students_add.html:36
 #: .\templates\student\students_list.html:34
 msgid "First name"
 msgstr ""
 
 #: .\templates\student\students_add.html:32
 msgid "Last name*"
+msgstr ""
+
+#: .\templates\student\students_add.html:36
+#: .\templates\student\students_list.html:27
+msgid "Last name"
 msgstr ""
 
 #: .\templates\student\students_add.html:42
@@ -257,6 +295,10 @@ msgstr ""
 
 #: .\templates\student\students_add.html:51
 msgid "Birthday*"
+msgstr ""
+
+#: .\templates\student\students_add.html:55
+msgid "eg"
 msgstr ""
 
 #: .\templates\student\students_add.html:69
@@ -281,7 +323,7 @@ msgid "Additional notes"
 msgstr ""
 
 #: .\templates\student\students_add.html:103 .\views\groups.py:74
-#: .\views\students.py:132
+#: .\views\students.py:133
 msgid "Cancel"
 msgstr ""
 
@@ -305,10 +347,6 @@ msgstr ""
 
 #: .\templates\student\students_list.html:11
 msgid "Add Student"
-msgstr ""
-
-#: .\templates\student\students_list.html:27
-msgid "Last name"
 msgstr ""
 
 #: .\templates\student\students_list.html:40
@@ -349,7 +387,7 @@ msgstr ""
 msgid "Your message was successfully sent!"
 msgstr ""
 
-#: .\views\groups.py:70 .\views\students.py:131
+#: .\views\groups.py:70 .\views\students.py:132
 msgid "Save"
 msgstr ""
 
@@ -361,54 +399,54 @@ msgstr ""
 msgid "Changes canceled."
 msgstr ""
 
-#: .\views\students.py:50
+#: .\views\students.py:51
 msgid "First Name field is required"
 msgstr ""
 
-#: .\views\students.py:56
+#: .\views\students.py:57
 msgid "Last Name field is required"
 msgstr ""
 
-#: .\views\students.py:62
+#: .\views\students.py:63
 msgid "This field is required."
 msgstr ""
 
-#: .\views\students.py:67
+#: .\views\students.py:68
 msgid "Enter the correct date format"
 msgstr ""
 
-#: .\views\students.py:73
+#: .\views\students.py:74
 msgid "Ticket number is a required field"
 msgstr ""
 
-#: .\views\students.py:79
+#: .\views\students.py:80
 msgid "Select a group for the student"
 msgstr ""
 
-#: .\views\students.py:83
+#: .\views\students.py:84
 msgid "Select the correct group"
 msgstr ""
 
-#: .\views\students.py:95
+#: .\views\students.py:96
 msgid "The student was successfully added!"
 msgstr ""
 
-#: .\views\students.py:101
+#: .\views\students.py:102
 msgid "Student additions canceled!"
 msgstr ""
 
-#: .\views\students.py:142
+#: .\views\students.py:143
 msgid "The student was successfully saved!"
 msgstr ""
 
-#: .\views\students.py:146
+#: .\views\students.py:147
 msgid "Editing of the student is canceled!"
 msgstr ""
 
-#: .\views\students.py:156
+#: .\views\students.py:157
 msgid "Student successfully deleted!"
 msgstr ""
 
-#: .\views\students.py:161
+#: .\views\students.py:162
 msgid "It's a good weather today!"
 msgstr ""

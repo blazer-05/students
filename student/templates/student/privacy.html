@@ -1,0 +1,9 @@
+{% extends 'student/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+    <div align="center"><h2>{{ privacys.title }}</h2></div>
+    <p>{{ privacys.privacy|safe }}</p>
+
+{% endblock content %}

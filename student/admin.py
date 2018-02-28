@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.forms import ModelForm, ValidationError
 
-from .models import Student, Group, MonthJournal
+from .models import Student, Group, MonthJournal, Privacy
 from django.core.urlresolvers import reverse
 
 class StudentFormAdmin(ModelForm):
@@ -30,3 +30,4 @@ class StudentAdmin(admin.ModelAdmin):
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Group)
 admin.site.register(MonthJournal)
+admin.site.register(Privacy)

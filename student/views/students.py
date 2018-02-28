@@ -4,11 +4,15 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
+#импорты функций декораторов.
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 from django.forms import ModelForm
 from django.views.generic import UpdateView, DeleteView
 from django.utils.translation import ugettext as _
 
-from student.models import Student, Group
+from student.models import Student, Group, Privacy
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from ..util import paginate, get_current_group
 
@@ -40,6 +44,7 @@ def student_list(request):
     return render(request, 'student/students_list.html', context)
 
 # Добавление студента
+@login_required #декоратор, который запрещает добавление студентов не авторизаванным пользователям и перенаправляет на страницу входа согласно переменной LOGIN_URL в settings.py
 def student_add(request):
     if request.method == 'POST':
         if request.POST.get('add_button') is not None:
@@ -93,7 +98,8 @@ def student_add(request):
                 student = Student(**data)
                 student.save()
                 return HttpResponseRedirect(
-                    u'%s?status_message=%s' % (reverse('home')), _('The student was successfully added!'))
+                    u'%s?status_message=%s' % (reverse('home'),
+                    _('The student was successfully added!')))
             else:
                 return render(request, 'student/students_add.html', {'groups': Group.objects.all().order_by('title'),
                                                                      'errors': errors})
@@ -140,13 +146,22 @@ class StudentUpdateView(UpdateView):
     form_class = StudentUpdateForm
 
     def get_success_url(self):
-        return u'%s?status_message=%s' % (reverse('home')), _('The student was successfully saved!')
+        return u'%s?status_message=%s' % (reverse('home'),
+               _('The student was successfully saved!'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home')), _('Editing of the student is canceled!'))
+            return HttpResponseRedirect(
+                u'%s?status_message=%s' % (reverse('home'),
+                _('Editing of the student is canceled!')))
         else:
             return super(StudentUpdateView, self).post(request, *args, **kwargs)
+
+    # метод, который запрещает внутри класса редактирование студента не авторизованным пользователям и перенаправляет на страницу входа согласно переменной LOGIN_URL в settings.py
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(StudentUpdateView, self).dispatch(*args, **kwargs)
+
 
 # Удаление студента
 class StudentDeleteView(DeleteView):
@@ -154,13 +169,22 @@ class StudentDeleteView(DeleteView):
     template_name = 'student/students_confirm_delete.html'
 
     def get_success_url(self):
-        return u'%s?status_message=%s' % (reverse('home')), _('Student successfully deleted!')
+        return u'%s?status_message=%s' % (reverse('home'),
+            _(u"Student successfully deleted!"))
+
+    # метод, который запрещает внутри класса удаление студента не авторизованным пользователям и перенаправляет на страницу входа согласно переменной LOGIN_URL в settings.py
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(StudentDeleteView, self).dispatch(*args, **kwargs)
 
 
-from django.utils.translation import ugettext as _
 def test(request):
     return render(request, 'student/test.html', {'message': _("It's a good weather today!") })
 
+
+def privacy(request):
+    privacys = Privacy.objects.get(id=1)
+    return render(request, 'student/privacy.html', {'privacys': privacys})
 
 '''
 

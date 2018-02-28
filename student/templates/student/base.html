@@ -30,7 +30,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-      <a class="navbar-brand" href="#">Brand</a>
+      <a class="navbar-brand" href="/">Students</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -38,18 +38,6 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Ссылка</a></li>
         <li><a href="#">Ссылка</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Действие</a></li>
-            <li><a href="#">Другое действие</a></li>
-            <li><a href="#">Что-то еще</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Отдельная ссылка</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Еще одна отдельная ссылка</a></li>
-          </ul>
-        </li>
       </ul>
       <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
@@ -68,6 +56,63 @@
          </ul>
 
         </li>
+        {% if user.is_authenticated %}
+
+            <li class='dropdown'>
+                <a class="dropdown-toggle" data-toggle="dropdown" id="navLogin"
+                   aria-expanded="false">{% trans 'Logout' %} ({{ user.username }})<span class="caret"></span></a>
+                <ul class="dropdown-menu well-sm login-dropdown" aria-labelledby="navLogin">
+                    <li><a href="{% url 'profile' %}">Мой профиль ({{ user.get_full_name|default:user.username }})</a></li>
+                    <li><a href="#">Другое действие</a></li>
+                    <li><a href="#">Что-то еще</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Отдельная ссылка</a></li>
+                    <li class="divider"></li>
+                    <a href="{% url 'users:auth_logout' %}">
+                        <button type="submit" class="btn btn-primary btn-xs">
+                            <span class="glyphicon glyphicon-log-out"></span> {% trans 'Logout' %}
+                        </button>
+                    </a>
+                </ul>
+            </li>
+
+      {% else %}
+
+          <li class="dropdown">
+             <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navLogin" aria-expanded="false">{% trans 'Login' %}<span class="caret"></span></a>
+             <ul class="dropdown-menu well-sm login-dropdown" aria-labelledby="navLogin">
+
+                <form action="{% url "users:auth_login" %}" method="post">
+
+                    {% csrf_token %}
+
+                   <input type="hidden" name="next" value="{% url "home" %}" />
+
+                   <div class="form-group">
+                       <label for="login">{% trans 'Login Name' %}</label>
+                       <input name="username" maxlength="254" required="" title="" id="login" placeholder="{% trans 'Login Name' %}" class="form-control" type="text">
+                   </div>
+
+                   <div class="form-group">
+                       <label for="password">{% trans 'Password' %}</label>
+                       <input name="password" required="" title="" id="password" placeholder="{% trans 'Password' %}" class="form-control" type="password">
+                   </div>
+
+                   <div class="form-group">
+                       <small><a href='{% url 'users:registration_register' %}'>{% trans 'Sign Up' %}</a> -
+                      <a href="">{% trans 'Forgot your password?' %}</a> - <br>
+                      <a href="">{% trans 'Activate Account' %}</a> -
+                      <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">{% trans 'via Facebook' %}</a>
+                       </small>
+                   </div>
+
+                   <button type="submit" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-log-in"></span> {% trans 'Login' %}</button>
+
+                </form>
+
+             </ul>
+          </li>
+          {% endif %}
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -129,8 +174,11 @@
       <div class="col-xs-8">
         <h1><a href="/">{% trans 'Students Accounting Service' %}</a></h1>
       </div>
+
+        {% if user.is_authenticated %}
+
       <div class="col-xs-4" id="group-selector">
-        <strong>{% trans 'Group:' %}</strong>
+        <strong>{% trans 'Group' %}:</strong>
         <select>
           <option value="">{% trans 'All Students' %}</option>
           {% for group in GROUPS %}
@@ -138,6 +186,22 @@
           {% endfor %}
         </select>
       </div>
+            <!-- User’s toolbar for authenticated users -->
+{#            <div class='' id='user-toolbar'>#}
+{#                <span>{{ user.username }}</span> |#}
+{#                <a href='{% url 'users:auth_logout' %}'>{% trans 'Logout' %}</a>#}
+{#            </div>#}
+{##}
+{#        {% else %}#}
+{##}
+{#            <!-- User’s toolbar for anonymous users -->#}
+{#            <div class='' id='user-toolbar'>#}
+{#                <a href='{% url 'users:auth_login' %}'>{% trans 'Login' %}</a> |#}
+{#                <a href='{% url 'users:registration_register' %}'>{% trans 'Sign Up' %}</a>#}
+{#            </div>#}
+
+        {% endif %}
+
     </div>
     <!-- End Header -->
 
@@ -145,14 +209,25 @@
     <div class="row" id="sub-header">
       <div class="col-xs-12">
         <ul class="nav nav-tabs" role="tablist">
+
             {% url 'home' as url_home %}
           <li role="presentation" {% if request.path == url_home %} class="active" {% endif %}><a href="{% url 'home' %}">{% trans 'Students' %}</a></li>
-            {% url 'journal' as url_journal %}
-          <li role="presentation" {% if request.path == url_journal %} class="active" {% endif %}><a href="{% url 'journal' %}">{% trans 'Journal' %}</a></li>
+
+{#        Убираем ссылку "Журнал" для не зарегистрированных пользователей, после авторизации ссылка доступна!#}
+        {% if user.is_authenticated %}
+            {% url 'journal' pk=id as url_journal %}
+          <li role="presentation" {% if request.path == url_journal %} class="active" {% endif %}><a href="{% url 'journal' pk=id %}">{% trans 'Journal' %}</a></li>
+        {% endif %}
+
             {% url 'groups' as url_groups %}
           <li role="presentation" {% if request.path == url_groups %} class="active" {% endif %}><a href="{% url 'groups' %}">{% trans 'Groups' %}</a></li>
+
+{#        Работает так же как и декоратор на функции contact_admin @permission_required('auth.add_user')#}
+        {% if perms.auth.add_user %}
             {% url 'contact_admin' as url_contact_admin %}
           <li role="presentation" {% if request.path == url_contact_admin %} class="active" {% endif %}><a href="{% url 'contact_admin' %}">{% trans 'Contact' %}</a></li>
+        {% endif %}
+
         </ul>
       </div>
     </div>
