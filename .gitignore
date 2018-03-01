@@ -52,7 +52,7 @@ coverage.xml
 *.pot
 
 # Django stuff:
-local_settings.py
+#local_settings.py
 
 # Flask stuff:
 instance/

@@ -47,12 +47,12 @@ def contact_admin(request):
             message = form.cleaned_data['message']
             from_email = form.cleaned_data['from_email']
             copy = form.cleaned_data['copy']
-            recepients = ['blazer-05@mail.ru']
+            recepients = ['my-email']
 
             if copy:
                 recepients.append(from_email)
             try:
-                send_mail(subject, message, 'blazer-05@mail.ru', recepients)
+                send_mail(subject, message, 'my-email', recepients)
             except Exception:
                 message = _(u'An unexpected error occurred while sending the message. Please try to send again.')
             else:
