@@ -2,8 +2,9 @@
 
 from datetime import datetime
 from django.http import HttpResponse
+from django.utils.deprecation import MiddlewareMixin
 
-class RequestTimeMiddleware(object):
+class RequestTimeMiddleware(MiddlewareMixin):
     """Display request time on a page"""
     def process_request(self, request):
         request.start_time = datetime.now()
@@ -12,7 +13,7 @@ class RequestTimeMiddleware(object):
     def process_response(self, request, response):
         # if our process_request was canceled somewhere within
         # middleware stack, we can not calculate request time
-        if not hasattr(request, 'date_time'):
+        if not hasattr(request, 'start_time'):
             return response
 
         # calculate request execution time
